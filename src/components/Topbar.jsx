@@ -1,5 +1,4 @@
-// O'ZGARDI: onMenuClick prop va ☰ tugmasi qo'shildi
-function Topbar({ title, onMenuClick }) {
+function Topbar({ title, onMenuClick, theme, onToggleTheme }) {
   return (
     <header className="topbar">
       <button
@@ -11,6 +10,13 @@ function Topbar({ title, onMenuClick }) {
       </button>
       <h1>{title}</h1>
       <div className="user-chip">
+        <button
+          className="theme-btn"
+          onClick={onToggleTheme}
+          aria-label="Rejimni almashtirish"
+        >
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
         <span>Mening do'konim</span>
         <div className="avatar">M</div>
       </div>

@@ -41,6 +41,8 @@ Instagram va Telegram orqali sotadigan kichik sotuvchilar buyurtmalarni ko'pinch
 | 🧾 | **Buyurtmalar** | Qo'shish, tahrirlash va o'chirish, validatsiyali forma bilan |
 | 🔄 | **Holatlar** | Yangi → Tayyorlanmoqda → Yo'lda → Yetkazildi / Bekor qilindi |
 | 🔍 | **Qidiruv va filtr** | Mijoz, telefon yoki mahsulot bo'yicha, holat tablari bilan |
+| 🌙 | **Qorong'i rejim** | Bir tugma bilan yorug' va qorong'i rejim, tanlov eslab qolinadi |
+| ⬇️ | **CSV eksport** | Ko'rinib turgan buyurtmalarni Excel da ochiladigan faylga yuklab olish |
 | 👥 | **Mijozlar** | Buyurtmalardan avtomatik yig'iladigan mijozlar ro'yxati |
 | 📊 | **Dashboard** | Statistika kartochkalari, 7 kunlik daromad grafigi, oxirgi buyurtmalar |
 | 💾 | **Saqlash** | Ma'lumotlar brauzerda (localStorage), sahifa yangilansa yo'qolmaydi |
@@ -65,6 +67,9 @@ Instagram va Telegram orqali sotadigan kichik sotuvchilar buyurtmalarni ko'pinch
 ### Telefon ko'rinishi
 <img src="screenshots/mobile.png" alt="Telefon ko'rinishi" width="300" />
 
+### Qorong'i rejim
+<img src="screenshots/dark.png" alt="Qorong'i rejim" width="90%" />
+
 </div>
 
 ---
@@ -75,6 +80,8 @@ Instagram va Telegram orqali sotadigan kichik sotuvchilar buyurtmalarni ko'pinch
 - **React Router**: Dashboard, Buyurtmalar va Mijozlar sahifalari
 - **Recharts**: daromad grafigi
 - **Custom hook (`useLocalStorage`)**: ma'lumotlarni brauzerda saqlash
+- **CSS o'zgaruvchilari**: qorong'i/yorug' mavzu bitta atribut orqali almashadi
+- **Blob API**: CSV faylni serversiz, brauzerning o'zida yaratish
 - **Sof CSS**: hech qanday UI kutubxonasiz, CSS o'zgaruvchilari va media-querylar bilan
 
 <details>
@@ -95,7 +102,8 @@ src/
 ├── data/
 │   └── orders.js        # namunaviy ma'lumotlar
 ├── utils/
-│   └── format.js        # narx, sana, telefon formatlash
+│   ├── format.js        # narx, sana, telefon formatlash
+│   └── exportCsv.js     # CSV faylni yuklab olish
 ├── App.jsx
 └── App.css
 ```
@@ -118,16 +126,15 @@ Brauzerda `http://localhost:5173` ni oching.
 ---
 
 ## 🗺 Kelajak rejalari
-
 - [x] Buyurtmalarni qo'shish, tahrirlash, o'chirish
 - [x] Qidiruv va holat bo'yicha filtr
 - [x] Dashboard va daromad grafigi
 - [x] Telefon uchun moslashuv
 - [x] Vercel ga joylash
-- [ ] Qorong'i rejim
-- [ ] Buyurtmalarni Excel/CSV ga yuklab olish
+- [x] Qorong'i rejim
+- [x] Buyurtmalarni CSV ga yuklab olish
 - [ ] Backend va haqiqiy ma'lumotlar bazasi
-
+- [ ] Bir nechta foydalanuvchi va kirish (login)
 ---
 
 <div align="center">

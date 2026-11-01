@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
@@ -19,6 +20,20 @@ function App() {
   const { pathname } = useLocation();
   const [orders, setOrders] = useLocalStorage('daftar_orders', initialOrders);
 
+  // Telefonda yon menyu ochiq/yopiqligi
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Qorong'i / yorug' rejim (tanlov brauzerda saqlanadi)
+  const [theme, setTheme] = useLocalStorage('daftar_theme', 'light');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  }
+
   function addOrder(data) {
     const nextId = orders.length ? Math.max(...orders.map((o) => o.id)) + 1 : 1;
 
@@ -32,14 +47,14 @@ function App() {
     setOrders([newOrder, ...orders]);
   }
 
-  // YANGI: buyurtmani tahrirlash (id, status, date o'zgarmaydi)
+  // Buyurtmani tahrirlash (id, status, date o'zgarmaydi)
   function updateOrder(id, data) {
     setOrders((prev) =>
       prev.map((order) => (order.id === id ? { ...order, ...data } : order))
     );
   }
 
-  // YANGI: buyurtmani o'chirish
+  // Buyurtmani o'chirish
   function deleteOrder(id) {
     const ok = window.confirm("Buyurtmani o'chirishni xohlaysizmi?");
     if (ok) setOrders((prev) => prev.filter((order) => order.id !== id));
@@ -60,10 +75,22 @@ function App() {
 
   return (
     <div className="layout">
-      <Sidebar onReset={resetOrders} />
+      <Sidebar
+        onReset={resetOrders}
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+      />
+      {menuOpen && (
+        <div className="sidebar-backdrop" onClick={() => setMenuOpen(false)} />
+      )}
 
       <div className="main">
-        <Topbar title={titles[pathname] ?? 'Sahifa topilmadi'} />
+        <Topbar
+          title={titles[pathname] ?? 'Sahifa topilmadi'}
+          onMenuClick={() => setMenuOpen(true)}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
 
         <main className="content">
           <Routes>

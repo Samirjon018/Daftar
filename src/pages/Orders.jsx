@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import OrderForm from '../components/OrderForm';
 import { STATUS_LABELS } from '../data/orders';
-import { formatPrice, formatDate } from '../utils/format';
+import { formatPrice, formatDate, todayISO } from '../utils/format';
+import { downloadCsv } from '../utils/exportCsv';
 
 // Filtr tugmalari: "Hammasi" + barcha holatlar
 const TABS = [['all', 'Hammasi'], ...Object.entries(STATUS_LABELS)];
@@ -14,7 +15,7 @@ function Orders({
   onStatusChange,
 }) {
   const [showForm, setShowForm] = useState(false);
-  const [editingOrder, setEditingOrder] = useState(null); // YANGI
+  const [editingOrder, setEditingOrder] = useState(null);
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -32,25 +33,22 @@ function Orders({
     return acc;
   }, {});
 
-  // YANGI: yangi buyurtma uchun formani ochish
   function openNew() {
     setEditingOrder(null);
     setShowForm(true);
   }
 
-  // YANGI: tahrirlash uchun formani ochish
   function openEdit(order) {
     setEditingOrder(order);
     setShowForm(true);
   }
 
-  // YANGI: formani yopish
   function closeForm() {
     setShowForm(false);
     setEditingOrder(null);
   }
 
-  // O'ZGARDI: tahrirlash bo'lsa yangilaydi, bo'lmasa qo'shadi
+  // Tahrirlash bo'lsa yangilaydi, bo'lmasa qo'shadi
   function handleSubmit(data) {
     if (editingOrder) {
       onUpdateOrder(editingOrder.id, data);
@@ -60,6 +58,25 @@ function Orders({
     closeForm();
   }
 
+  // YANGI: ko'rinib turgan buyurtmalarni CSV ga yuklab olish
+  function handleExport() {
+    const headers = ['#', 'Mijoz', 'Telefon', 'Mahsulot', 'Summa', 'Manba', 'Holat', 'Sana'];
+
+    const rows = visibleOrders.map((order) => [
+      order.id,
+      order.customer,
+      // ="..." Excel telefondagi "+" belgisini yo'qotmasligi uchun
+      `="${order.phone}"`,
+      order.product,
+      order.amount,
+      order.source,
+      STATUS_LABELS[order.status] ?? order.status,
+      formatDate(order.date),
+    ]);
+
+    downloadCsv(`daftar-buyurtmalar-${todayISO()}.csv`, headers, rows);
+  }
+
   return (
     <>
       <div className="card">
@@ -67,9 +84,18 @@ function Orders({
           <h2>
             Barcha buyurtmalar <span className="count">{orders.length}</span>
           </h2>
-          <button className="btn btn-primary" onClick={openNew}>
-            + Yangi buyurtma
-          </button>
+          <div className="header-actions">
+            <button
+              className="btn btn-ghost"
+              onClick={handleExport}
+              disabled={visibleOrders.length === 0}
+            >
+              ⬇ CSV
+            </button>
+            <button className="btn btn-primary" onClick={openNew}>
+              + Yangi buyurtma
+            </button>
+          </div>
         </div>
 
         <div className="toolbar">

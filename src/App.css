@@ -577,6 +577,17 @@
   display: none;
 }
 
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Telefon va planshet (shu blok doim faylning OXIRIDA turishi kerak) */
 @media (max-width: 800px) {
   .layout {
@@ -638,3 +649,64 @@
     flex-wrap: wrap;
   }
 }
+
+/* 🌙 Qorong'i rejim tugmasi */
+.theme-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* 🌙 Qorong'i rejim */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b1120;
+  --card: #111827;
+  --border: #1f2937;
+  --muted: #9ca3af;
+  --primary: #6366f1;
+  --primary-soft: rgba(99, 102, 241, 0.18);
+  --sidebar-bg: #0a0f1c;
+  --sidebar-text: #9ca3af;
+}
+
+html[data-theme='dark'] body {
+  background: var(--bg);
+  color: #e5e7eb;
+}
+
+/* Kiritish maydonlari va tugmalar: oq fon o'rniga kartochka rangi */
+html[data-theme='dark'] .field input,
+html[data-theme='dark'] .field select,
+html[data-theme='dark'] .search-input,
+html[data-theme='dark'] .menu-btn,
+html[data-theme='dark'] .btn-small:not(.btn-danger) {
+  background: var(--card);
+  color: #e5e7eb;
+}
+
+html[data-theme='dark'] .tab:not(.active) {
+  background: var(--card);
+}
+
+html[data-theme='dark'] .table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme='dark'] .btn-danger {
+  border-color: rgba(248, 113, 113, 0.4);
+  background: rgba(220, 38, 38, 0.12);
+  color: #f87171;
+}
+
+/* Holat belgilari */
+html[data-theme='dark'] .badge-new { background: rgba(59, 130, 246, 0.18); color: #93c5fd; }
+html[data-theme='dark'] .badge-preparing { background: rgba(245, 158, 11, 0.18); color: #fcd34d; }
+html[data-theme='dark'] .badge-shipping { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+html[data-theme='dark'] .badge-delivered { background: rgba(16, 185, 129, 0.18); color: #6ee7b7; }
+html[data-theme='dark'] .badge-cancelled { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
