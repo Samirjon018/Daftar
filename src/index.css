@@ -1,0 +1,33 @@
+:root {
+  --primary: #4F46E5;
+  --primary-soft: #EEF2FF;
+  --sidebar-bg: #111827;
+  --sidebar-text: #9CA3AF;
+  --bg: #F4F6FA;
+  --card: #FFFFFF;
+  --text: #111827;
+  --muted: #6B7280;
+  --border: #E5E7EB;
+  --radius: 12px;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
